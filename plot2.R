@@ -1,0 +1,10 @@
+housepwr<-fread("household_power_consumption.txt",skip = "1/2/2007",nrows=10000,sep=";")
+housepwr<-subset(housepwr,V1<="2/2/2007")
+names(housepwr)<-c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3")
+housepwr$Date<-as.Date(housepwr$Date,format="%d/%m/%Y")
+housepwr$Time<-as.POSIXct(paste(housepwr$Date,housepwr$Time),format="%Y-%m-%d %H:%M:%S")
+
+dev.new()
+png("plot1.png")
+with(housepwr,hist(Global_active_power),col="red",main="Global Active Power",xlab="Global Active Power (kilowatts)")
+dev.off()
